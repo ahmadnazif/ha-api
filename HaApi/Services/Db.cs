@@ -118,7 +118,7 @@ public class Db : IDb
         {
             PostResponse resp = new() { IsSuccess = false };
             string query =
-                "INSERT INTO sms (id, from, to, text) VALUES " +
+                "INSERT INTO sms (id, `from`, `to`, text) VALUES " +
                 "(@a, @b, @c, @d);";
 
             using (MySqlConnection connection = new(this.dbConString))
@@ -133,7 +133,8 @@ public class Db : IDb
                 await cmd.ExecuteNonQueryAsync();
                 resp = new PostResponse
                 {
-                    IsSuccess = true
+                    IsSuccess = true,
+                    Message = "SMS added"
                 };
             }
 
@@ -142,6 +143,44 @@ public class Db : IDb
         catch (Exception ex)
         {
             logger.LogError($"{nameof(AddSmsAsync)}: {ex.Message}");
+            return new PostResponse
+            {
+                IsSuccess = false,
+                Message = ex.Message
+            };
+        }
+    }
+
+    public async Task<PostResponse> EditSmsAsync(SmsBase sms)
+    {
+        try
+        {
+            PostResponse resp = new() { IsSuccess = false };
+            string query =
+                "UPDATE sms SET `from` = @b, `to` = @c, text = @d WHERE id = @a;";
+
+            using (MySqlConnection connection = new(this.dbConString))
+            {
+                await connection.OpenAsync();
+                using MySqlCommand cmd = new(query, connection);
+                cmd.Parameters.AddWithValue("@a", sms.SmsId);
+                cmd.Parameters.AddWithValue("@b", sms.From);
+                cmd.Parameters.AddWithValue("@c", sms.To);
+                cmd.Parameters.AddWithValue("@d", sms.Text);
+
+                await cmd.ExecuteNonQueryAsync();
+                resp = new PostResponse
+                {
+                    IsSuccess = true,
+                    Message = $"SMS '{sms.SmsId}' updated"
+                };
+            }
+
+            return resp;
+        }
+        catch (Exception ex)
+        {
+            logger.LogError($"{nameof(EditSmsAsync)}: {ex.Message}");
             return new PostResponse
             {
                 IsSuccess = false,
@@ -167,7 +206,8 @@ public class Db : IDb
                 await cmd.ExecuteNonQueryAsync();
                 resp = new PostResponse
                 {
-                    IsSuccess = true
+                    IsSuccess = true,
+                    Message = $"SMS '{smsId}' deleted"
                 };
             }
 
@@ -176,43 +216,6 @@ public class Db : IDb
         catch (Exception ex)
         {
             logger.LogError($"{nameof(DeleteSmsAsync)}: {ex.Message}");
-            return new PostResponse
-            {
-                IsSuccess = false,
-                Message = ex.Message
-            };
-        }
-    }
-
-    public async Task<PostResponse> EditSmsAsync(SmsBase sms)
-    {
-        try
-        {
-            PostResponse resp = new() { IsSuccess = false };
-            string query =
-                "UPDATE sms SET from = @b, to = @c, text = @d WHERE id = @a;";
-
-            using (MySqlConnection connection = new(this.dbConString))
-            {
-                await connection.OpenAsync();
-                using MySqlCommand cmd = new(query, connection);
-                cmd.Parameters.AddWithValue("@a", sms.SmsId);
-                cmd.Parameters.AddWithValue("@b", sms.From);
-                cmd.Parameters.AddWithValue("@c", sms.To);
-                cmd.Parameters.AddWithValue("@d", sms.Text);
-
-                await cmd.ExecuteNonQueryAsync();
-                resp = new PostResponse
-                {
-                    IsSuccess = true
-                };
-            }
-
-            return resp;
-        }
-        catch (Exception ex)
-        {
-            logger.LogError($"{nameof(EditSmsAsync)}: {ex.Message}");
             return new PostResponse
             {
                 IsSuccess = false,
