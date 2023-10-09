@@ -4,20 +4,23 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HaApi.Controllers;
 
-[Route("api/crud")]
+[Route("api/sms")]
 [ApiController]
-public class CrudController : ControllerBase
+public class SmsController : ControllerBase
 {
     private readonly Logger logger;
-    private readonly ILogger<CrudController> consoleLogger;
-    public CrudController(Logger logger, ILogger<CrudController> consoleLogger)
+    private readonly ILogger<SmsController> consoleLogger;
+    private readonly IDb db;
+
+    public SmsController(Logger logger, ILogger<SmsController> consoleLogger, IDb db)
     {
         this.logger = logger;
         this.consoleLogger = consoleLogger;
+        this.db = db;
     }
 
     [HttpGet("get")]
-    public ActionResult<PostResponse> Get()
+    public async Task<ActionResult<PostResponse>> GetSms([FromQuery] string smsId)
     {
         var logEntry = $"Get method called on {DateTime.Now}";
         logger.Called(logEntry);
