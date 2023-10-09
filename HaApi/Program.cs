@@ -4,6 +4,7 @@ var builder = WebApplication.CreateBuilder(args);
 var config = builder.Configuration;
 
 builder.Services.AddSingleton<Logger>();
+builder.Services.AddSingleton<IDb, Db>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();

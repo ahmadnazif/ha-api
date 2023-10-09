@@ -8,28 +8,40 @@ namespace HaApi.Controllers;
 [ApiController]
 public class SmsController : ControllerBase
 {
-    private readonly Logger logger;
-    private readonly ILogger<SmsController> consoleLogger;
     private readonly IDb db;
 
-    public SmsController(Logger logger, ILogger<SmsController> consoleLogger, IDb db)
+    public SmsController(IDb db)
     {
-        this.logger = logger;
-        this.consoleLogger = consoleLogger;
         this.db = db;
     }
 
     [HttpGet("get")]
-    public async Task<ActionResult<PostResponse>> GetSms([FromQuery] string smsId)
+    public async Task<ActionResult<Sms>> GetSms([FromQuery] string smsId)
     {
-        var logEntry = $"Get method called on {DateTime.Now}";
-        logger.Called(logEntry);
-        consoleLogger.LogInformation(logEntry);
+        return await db.GetSmsAsync(smsId);
+    }
 
-        return new PostResponse
-        {
-            IsSuccess = true,
-            Message = logEntry
-        };
+    [HttpGet("list-all")]
+    public async Task<ActionResult<List<Sms>>> ListAllSms()
+    {
+        return await db.ListAllSmsAsync();
+    }
+
+    [HttpPost("add")]
+    public async Task<PostResponse> AddSms([FromBody] SmsBase sms)
+    {
+        return await db.AddSmsAsync(sms);
+    }
+
+    [HttpPut("edit")]
+    public async Task<PostResponse> EditSms([FromBody] SmsBase sms)
+    {
+        return await db.EditSmsAsync(sms);
+    }
+
+    [HttpDelete("delete")]
+    public async Task<PostResponse> DeleteSms([FromQuery] string smsId)
+    {
+        return await db.DeleteSmsAsync(smsId);
     }
 }
