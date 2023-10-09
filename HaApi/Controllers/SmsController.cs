@@ -28,19 +28,19 @@ public class SmsController : ControllerBase
     }
 
     [HttpPost("add")]
-    public async Task<PostResponse> AddSms([FromBody] SmsBase sms)
+    public async Task<ActionResult<PostResponse>> AddSms([FromBody] SmsBase sms)
     {
         return await db.AddSmsAsync(sms);
     }
 
     [HttpPut("edit")]
-    public async Task<PostResponse> EditSms([FromBody] SmsBase sms)
+    public async Task<ActionResult<PostResponse>> EditSms([FromBody] SmsBase sms)
     {
         return await db.EditSmsAsync(sms);
     }
 
     [HttpDelete("delete")]
-    public async Task<PostResponse> DeleteSms([FromQuery] string smsId)
+    public async Task<ActionResult<PostResponse>> DeleteSms([FromQuery] string smsId)
     {
         return await db.DeleteSmsAsync(smsId);
     }
