@@ -5,10 +5,10 @@ var config = builder.Configuration;
 
 builder.Services.AddSingleton<Logger>();
 
-switch (config["DataSource"])
+switch (int.Parse(config["DataSource"]))
 {
-    case "MySqlDb": builder.Services.AddSingleton<IDb, MySqlDb>(); break;
-    case "InMemory": builder.Services.AddSingleton<IDb, InMemoryDb>(); break;
+    case 1: builder.Services.AddSingleton<IDb, InMemoryDb>(); break;
+    case 2: builder.Services.AddSingleton<IDb, MySqlDb>(); break;
 }
 
 builder.Services.AddControllers();
@@ -18,7 +18,7 @@ builder.Services.AddCors(x => x.AddDefaultPolicy(y => y.AllowAnyOrigin().AllowAn
 
 builder.WebHost.ConfigureKestrel(x =>
 {
-    var httpPort = int.Parse(config["port"]);
+    var httpPort = int.Parse(config["Port"]);
     x.ListenAnyIP(httpPort);
 });
 
