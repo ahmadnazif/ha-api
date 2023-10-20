@@ -1,14 +1,15 @@
 # HA API
-Simple API built using ASP.NET Core for HA purpose. Can be deployed on Linux, Windows or Docker
+Simple HTTP API built using ASP.NET Core initially for testing my HA flow. Can be deployed on Linux, Windows or Docker.
 
 ## Running:
-- The default port here is <code>5500</code>. You may change it to any avilable port 
+- The default app port here is `5500`. You may change it in "appsettings.json" to any avilable port such as 80 (typically when using Docker).
 - Using dotnet CLI:
-  - <code>dotnet run</code> or
-  - <code>dotnet HaApi.dll</code> after debugging the app
+  - `dotnet run` or
+  - `dotnet HaApi.dll` after debugging the app
 - Using docker:
-  - Build image: <code>docker build -f Dockerfile .. -t haapi:v1</code> (Make sure you in root project. This command will make "haapi:v1" image)
-  - Run container: <code>docker run --name haapi-demo -p 5502:5500 -d haapi:v1</code> (This will create "haapi-demo" container with port 5002 pointing to internal 5000 in container)
+  - In "Dockerfile", make sure to `EXPOSE` the same port as stated in "appsettings.json" file.
+  - Build image: `docker build -f Dockerfile .. -t haapi:v1` (This will create "haapi:v1" image)
+  - Run container: `docker run --name haapi-demo -p 5502:5500 -d haapi:v1` (This will create "haapi-demo" container in detatched mode with port `5502` pointing to internal `5500` in container)
 
 
 ## MySQL DB
