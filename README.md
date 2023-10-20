@@ -12,13 +12,14 @@ Simple API built using ASP.NET Core for HA purpose. Can be deployed on Linux, Wi
 
 
 ## MySQL DB
-If use MySQL as data source, create the <code>apidemo</code> db:
+If use MySQL as data source, create the "apidemo" db:
+<br />
 
-<code>
-CREATE DATABASE IF NOT EXISTS `apidemo`
+~~~~sql
+CREATE DATABASE IF NOT EXISTS `apidemo`;
 USE `apidemo`;
-  
-CREATE TABLE IF NOT EXISTS `sms` (
+
+CREATE TABLE IF NOT EXISTS `apidemo` (
 `id` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
 `from` varchar(50) DEFAULT NULL,
 `to` varchar(50) DEFAULT NULL,
@@ -26,6 +27,6 @@ CREATE TABLE IF NOT EXISTS `sms` (
 `created_time` datetime DEFAULT CURRENT_TIMESTAMP,
 PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
-</code>
-
+~~~~
+<br />
 Dont forget to create user for this db
