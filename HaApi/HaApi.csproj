@@ -4,9 +4,11 @@
     <TargetFramework>net6.0</TargetFramework>
     <Nullable>annotations</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.19.4" />
     <PackageReference Include="MongoDB.Driver" Version="2.21.0" />
     <PackageReference Include="MySql.Data" Version="8.1.0" />
     <PackageReference Include="NLog.Web.AspNetCore" Version="5.3.4" />
