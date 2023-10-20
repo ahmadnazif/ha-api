@@ -12,7 +12,7 @@ Simple API built using ASP.NET Core for HA purpose. Can be deployed on Linux, Wi
 
 
 ## MySQL DB
-If use MySQL as data source, create the "apidemo" db:
+If you use MySQL as data source, create the "apidemo" db:
 <br />
 
 ~~~~sql
