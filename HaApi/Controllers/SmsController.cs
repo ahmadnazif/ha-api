@@ -15,6 +15,12 @@ public class SmsController : ControllerBase
         this.db = db;
     }
 
+    [HttpGet("count")]
+    public async Task<ActionResult<int>> CountSms()
+    {
+        return await db.CountSmsAsync();
+    }
+
     [HttpGet("get")]
     public async Task<ActionResult<Sms>> GetSms([FromQuery] string smsId)
     {

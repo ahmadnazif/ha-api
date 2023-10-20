@@ -6,6 +6,8 @@ public class InMemoryDb : IDb
 {
     private Dictionary<string, Sms> SmsDict { get; set; } = new();
 
+    public async Task<int> CountSmsAsync() => await Task.FromResult(SmsDict.Count);
+
     public async Task<PostResponse> AddSmsAsync(SmsBase sms)
     {
         var id = Guid.NewGuid().ToString("N").ToUpper();

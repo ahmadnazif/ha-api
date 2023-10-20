@@ -224,6 +224,34 @@ public class MySqlDb : IDb
         }
     }
 
+    public async Task<int> CountSmsAsync()
+    {
+        try
+        {
+            int data = 0;
+            string sql = "SELECT COUNT(*) FROM sms;";
+
+            using (MySqlConnection connection = new(this.dbConString))
+            {
+                await connection.OpenAsync();
+                using MySqlCommand cmd = new(sql, connection);
+                using var reader = await cmd.ExecuteReaderAsync();
+                while (await reader.ReadAsync())
+                {
+                    data = GetIntValue(reader[0]).Value;
+                }
+            }
+
+            return data;
+        }
+        catch (Exception ex)
+        {
+            logger.LogError($"{nameof(CountSmsAsync)}: {ex.Message}");
+            return 0;
+        }
+    }
+
+
     public async Task<Sms> GetSmsAsync(string smsId)
     {
         try
