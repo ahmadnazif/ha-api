@@ -20,7 +20,7 @@ If you use MySQL as data source, create the "apidemo" db:
 CREATE DATABASE IF NOT EXISTS `apidemo`;
 USE `apidemo`;
 
-CREATE TABLE IF NOT EXISTS `apidemo` (
+CREATE TABLE IF NOT EXISTS `sms` (
 `id` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
 `from` varchar(50) DEFAULT NULL,
 `to` varchar(50) DEFAULT NULL,
