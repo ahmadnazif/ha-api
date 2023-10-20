@@ -4,12 +4,12 @@ using System.Text.Json;
 
 namespace HaApi.Services;
 
-public class Db : IDb
+public class MySqlDb : IDb
 {
-    private readonly ILogger<Db> logger;
+    private readonly ILogger<MySqlDb> logger;
     private readonly string dbConString;
 
-    public Db(ILogger<Db> logger, IConfiguration config)
+    public MySqlDb(ILogger<MySqlDb> logger, IConfiguration config)
     {
         this.logger = logger;
         dbConString = GenerateConnectionString(config);
