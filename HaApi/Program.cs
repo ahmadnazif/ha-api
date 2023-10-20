@@ -4,7 +4,12 @@ var builder = WebApplication.CreateBuilder(args);
 var config = builder.Configuration;
 
 builder.Services.AddSingleton<Logger>();
-builder.Services.AddSingleton<IDb, MySqlDb>();
+
+switch (config["DataSource"])
+{
+    case "MySqlDb": builder.Services.AddSingleton<IDb, MySqlDb>(); break;
+    case "InMemory": builder.Services.AddSingleton<IDb, InMemoryDb>(); break;
+}
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
